@@ -1,4 +1,4 @@
-package s2m.me.regulation.service;
+package s2m.me.regulation.service.client;
 
 import java.util.Map;
 

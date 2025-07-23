@@ -11,36 +11,21 @@
   *
   */
 
-package ma.s2m.nxp.regulation.entity;
-
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import lombok.ToString;
-import ma.s2m.nxp.regulation.entity.report.institution.SettlementReport;
-import ma.s2m.nxp.regulation.entity.report.dph.WalletActivityReport;
-import ma.s2m.nxp.regulation.enums.SettlementStatus;
+package s2m.me.regulation.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
+import jakarta.persistence.*;
+import s2m.me.regulation.domain.report.WalletActivityReport;
+import s2m.me.regulation.enums.SettlementStatus;
+
+import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter

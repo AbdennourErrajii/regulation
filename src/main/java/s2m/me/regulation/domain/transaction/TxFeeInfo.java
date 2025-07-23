@@ -10,13 +10,14 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.transaction;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+import s2m.me.regulation.domain.FeeInfo;
 
 /**
  * The Class FeeInfo.

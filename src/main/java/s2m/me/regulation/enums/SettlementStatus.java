@@ -10,7 +10,7 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package ma.s2m.nxp.regulation.enums;
+package s2m.me.regulation.enums;
 
 public enum SettlementStatus {
 

@@ -10,7 +10,7 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.report;
 
 import jakarta.persistence.*;
 import lombok.Getter;

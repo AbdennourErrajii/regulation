@@ -1,8 +1,9 @@
-package com.S2M.TransactionsBatchUseCase.Repo;
+package s2m.me.regulation.repository;
 
-import com.S2M.TransactionsBatchUseCase.Entity.Repport.SettlementReport;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import s2m.me.regulation.domain.report.SettlementReport;
 
 @Repository
 public interface SettlementReportRepository extends JpaRepository<SettlementReport, Long> {

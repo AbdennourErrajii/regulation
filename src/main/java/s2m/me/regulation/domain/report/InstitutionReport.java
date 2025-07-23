@@ -10,7 +10,7 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.report;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +20,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -42,6 +43,9 @@ public class InstitutionReport {
 	/** The institution id. */
 	@Column(name = "INST_ID")
 	private String institutionId;
+
+	@Column(name = "SESSION_ID") // <- AJOUTER CE CHAMP
+	private String sessionId;
 
 	/** The trx report. */
 	@LazyCollection(LazyCollectionOption.FALSE)

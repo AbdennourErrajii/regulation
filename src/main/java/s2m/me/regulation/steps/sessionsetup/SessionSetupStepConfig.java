@@ -1,4 +1,4 @@
-package s2m.me.regulation.steps;
+package s2m.me.regulation.steps.sessionsetup;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;

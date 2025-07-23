@@ -11,7 +11,7 @@
   *
   */
 
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.transaction;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

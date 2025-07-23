@@ -10,7 +10,7 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.report;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +21,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 

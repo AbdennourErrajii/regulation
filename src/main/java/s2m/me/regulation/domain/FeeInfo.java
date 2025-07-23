@@ -10,15 +10,14 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package ma.s2m.nxp.regulation.entity;
+package s2m.me.regulation.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ma.s2m.dph.client.regulation.enums.FeeType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Setter
@@ -60,8 +59,9 @@ public abstract class FeeInfo {
 
 	/** The fee type. */
 	@Column(name = "FEE_TYPE")
-	@Enumerated
-	private FeeType feeType;
+	//@Enumerated
+	//private FeeType feeType;
+	private String feeType;
 
 	@Column(name = "INST_REF")
 	public String institutionReference;

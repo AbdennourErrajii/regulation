@@ -1,4 +1,4 @@
-package s2m.me.regulation.steps;
+package s2m.me.regulation.steps.sessionsetup;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
@@ -13,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import s2m.me.regulation.domain.Settlement;
 import s2m.me.regulation.enums.SettlementStatus;
 import s2m.me.regulation.repository.SettlementRepository;
-import s2m.me.regulation.service.ProcessingClient;
-import s2m.me.regulation.service.SafClient;
+import s2m.me.regulation.service.client.ProcessingClient;
+import s2m.me.regulation.service.client.SafClient;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -51,11 +53,10 @@ public class SessionSetupTasklet implements Tasklet {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         log.info("--- [Step 1/5] Starting SessionSetupStep for sessionId: {} ---", sessionIdToProcess);
 
-        // 1. Trouver le règlement à traiter
+        // 1. & 2. Trouver et Valider le règlement
         Settlement currentSettlement = settlementRepository.findBySessionId(sessionIdToProcess)
                 .orElseThrow(() -> new IllegalStateException("FATAL: Settlement not found for sessionId: " + sessionIdToProcess));
 
-        // 2. Valider son état
         if (currentSettlement.getStatus() != SettlementStatus.PENDING) {
             log.error("Settlement {} is not in PENDING state. Current state: {}. Aborting job.", sessionIdToProcess, currentSettlement.getStatus());
             throw new IllegalStateException("Settlement is not in PENDING state.");
@@ -82,16 +83,31 @@ public class SessionSetupTasklet implements Tasklet {
         settlementRepository.save(nextSettlement);
         log.info("Persisted current settlement as IN_PROGRESS and created new settlement {} as PENDING.", newSessionId);
 
-        // 7. Notifier les autres services avec le NOUVEAU sessionId
+        // 7. Notifier les autres services avec la NOUVELLE liste des sessions PENDING
         try {
-            Map<String, String> activeSessionsMap = settlementRepository.findActiveSessionIds();
-            activeSessionsMap.put(this.centerId, newSessionId);
+            // **CORRECTION APPLIQUÉE ICI**
+            // 1. Récupérer toutes les sessions PENDING actuelles (qui inclut encore celle qu'on traite)
+            List<Settlement> pendingSettlementsFromDb = settlementRepository.findByStatus(SettlementStatus.PENDING);
 
-            processingClient.sendSessionIds(activeSessionsMap);
-            safClient.sendSessionIds(activeSessionsMap);
-            log.info("Successfully notified external services with the new active session map.");
+            // 2. Construire la map manuellement pour refléter l'état FUTUR
+            Map<String, String> activeSessionsMap = new HashMap<>();
+            for (Settlement s : pendingSettlementsFromDb) {
+                // On exclut explicitement la session que l'on est en train de traiter de la liste PENDING
+                if (!s.getSessionId().equals(this.sessionIdToProcess)) {
+                    activeSessionsMap.put(s.getCenterId(), s.getSessionId());
+                }
+            }
+
+            // 3. On ajoute la nouvelle session qui sera PENDING après le commit
+            activeSessionsMap.put(nextSettlement.getCenterId(), nextSettlement.getSessionId());
+
+            log.info("Notifying external services with the final active session map: {}", activeSessionsMap);
+            //processingClient.sendSessionIds(activeSessionsMap);
+            //safClient.sendSessionIds(activeSessionsMap);
+
         } catch (Exception e) {
-            log.error("CRITICAL: Failed to notify external services about the new sessionId {}. Rolling back transaction.", newSessionId, e);
+            log.error("CRITICAL: Failed to notify external services about the new sessions. Rolling back transaction.", e);
+            // On encapsule l'exception originale pour un meilleur débogage
             throw new RuntimeException("Failed to notify external services. The settlement process will be rolled back.", e);
         }
 

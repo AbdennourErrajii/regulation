@@ -1,1 +1,64 @@
-spring.application.name=regulation
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@//10.0.24.4:1540/PSSQLF
+#    username: NXP_DPH_REGULATION_BATCH
+#    password: nxp
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    hikari:
+#      maximum-pool-size: 10
+#      minimum-idle: 2
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.OracleDialect
+
+
+spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+
+
+  application:
+    name: Regulation
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/regulation_db
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+
+
+server:
+  port: 9001
+
+
+microservice:
+  processing:
+    api-url: http://localhost:8081
+  saf:
+    api-url: http://localhost:8082
+

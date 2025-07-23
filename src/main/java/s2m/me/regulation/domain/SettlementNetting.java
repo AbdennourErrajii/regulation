@@ -11,17 +11,18 @@
   *
   */
 
-package ma.s2m.nxp.regulation.entity;
+package s2m.me.regulation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ma.s2m.nxp.regulation.enums.NettingStatus;
-import ma.s2m.nxp.regulation.enums.NettingType;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
+import s2m.me.regulation.enums.NettingStatus;
+
 import java.util.Date;
 
 @Setter

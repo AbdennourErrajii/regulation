@@ -10,14 +10,15 @@
   * Contact : www.s2mworldwide.com
   *
   */
-package s2m.me.regulation.domain;
+package s2m.me.regulation.domain.report;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.s2m.dph.client.regulation.enums.FeeType;
 
 import jakarta.persistence.*;
+import s2m.me.regulation.domain.FeeInfo;
+
 import java.math.BigDecimal;
 
 /**
@@ -61,8 +62,9 @@ public class ReportFeeInfo extends FeeInfo {
 
 	/** The fee type. */
 	@Column(name = "FEE_TYPE")
-	@Enumerated
-	private FeeType feeType;
+	//@Enumerated
+	//private FeeType feeType;
+	private String feeType;
 
 	@JoinColumn(name = "SETTLEMENT_REPORT_ID")
 	@ManyToOne
