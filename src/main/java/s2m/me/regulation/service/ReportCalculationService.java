@@ -6,7 +6,6 @@ import s2m.me.regulation.domain.report.*;
 import s2m.me.regulation.domain.transaction.Transaction;
 import s2m.me.regulation.domain.transaction.TxFeeInfo;
 import s2m.me.regulation.dto.CalculationResult;
-
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;

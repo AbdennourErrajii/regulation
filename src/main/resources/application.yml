@@ -61,4 +61,6 @@ microservice:
     api-url: http://localhost:8081
   saf:
     api-url: http://localhost:8082
+  pacs-generator:
+    api-url: http://localhost:9002
 

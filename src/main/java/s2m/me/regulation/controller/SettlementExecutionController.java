@@ -55,7 +55,6 @@ public class SettlementExecutionController {
                     .toJobParameters();
             jobLauncher.run(regulationJob, jobParameters);
 
-
             String message = "Settlement job for session " + request.getSessionId() + " has been successfully launched.";
             log.info(message);
             return ResponseEntity.ok(message);
